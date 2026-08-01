@@ -1,66 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AirShare — White</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#fff;color:#111827}
-.grid-bg{position:fixed;inset:0;background-image:radial-gradient(#e5e7eb 1px,transparent 1px);background-size:24px 24px;opacity:.6;z-index:-1}
-nav{max-width:1200px;margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+body{background:#fff;color:#111827;min-height:100vh}
+.grid{position:fixed;inset:0;background-image:radial-gradient(#e5e7eb 1px,transparent 1px);background-size:22px 22px;opacity:.7;z-index:-1}
+nav{max-width:1180px;margin:auto;padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-weight:800;font-size:22px;letter-spacing:-1px}
-.nav-pill{display:flex;gap:8px}
-.pill-btn{padding:8px 14px;border-radius:100px;border:1px solid #e5e7eb;background:#fff;font-size:13px;font-weight:500;cursor:pointer}
-.pill-btn.black{background:#111827;color:#fff;border-color:#111827}
-.hero{max-width:900px;margin:60px auto 40px;text-align:center;padding:0 24px}
-.hero h1{font-size:clamp(40px,7vw,80px);font-weight:800;line-height:.9;letter-spacing:-3px}
+.pills{display:flex;gap:8px}
+.pill{padding:8px 14px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-size:13px;font-weight:500}
+.pill.black{background:#111827;color:#fff;border-color:#111827}
+.hero{text-align:center;padding:50px 20px 30px}
+.hero h1{font-size:clamp(42px,7vw,76px);font-weight:800;line-height:.92;letter-spacing:-3px}
 .hero h1 span{color:#2563eb}
-.hero p{color:#6b7280;font-size:18px;margin-top:20px;line-height:1.5;max-width:500px;margin-inline:auto}
-.card-wrap{max-width:640px;margin:0 auto;padding:0 20px}
-.card{background:#fff;border:1px solid #e5e7eb;box-shadow:0 20px 40px rgba(0,0,0,.06);border-radius:24px;padding:24px}
-.drop{border:2px dashed #d1d5db;border-radius:18px;padding:48px 20px;text-align:center;cursor:pointer;background:#f9fafb;transition:.2s}
-.drop:hover{border-color:#2563eb;background:#eff6ff}
-.drop-icon{width:48px;height:48px;background:#111827;border-radius:12px;display:grid;place-items:center;color:#fff;margin:0 auto 14px}
-.bar-wrap{height:6px;background:#f3f4f6;border-radius:100px;margin-top:20px;overflow:hidden;display:none}
-.bar{height:100%;width:0%;background:#111827;border-radius:100px;transition:width.2s}
-.file{background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;padding:14px 16px;margin-top:16px;display:none;justify-content:space-between}
-.link-box{margin-top:16px;background:#111827;border-radius:14px;padding:14px;display:none}
-.link-row{display:flex;gap:10px;margin-top:8px}
-.link-row input{flex:1;background:#1f2937;border:1px solid #374151;border-radius:10px;padding:12px;color:#93c5fd}
-.copy{padding:12px 18px;border-radius:10px;background:#fff;color:#111827;border:none;font-weight:600;cursor:pointer}
-.features{max-width:1100px;margin:80px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;padding:0 24px}
-.feat{background:#fff;border:1px solid #f3f4f6;border-radius:20px;padding:24px}
-.feat h4{font-size:14px;margin-bottom:6px}
-.feat p{font-size:13px;color:#6b7280;line-height:1.6}
-footer{text-align:center;padding:50px;color:#9ca3af;font-size:12px;border-top:1px solid #f3f4f6;margin-top:80px}
+.hero p{color:#6b7280;margin-top:14px;font-size:17px;max-width:520px;margin-inline:auto;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding:0 20px}
+.card{background:#fff;border:1px solid #e5e7eb;box-shadow:0 24px 50px rgba(0,0,0,.06);border-radius:26px;padding:26px}
+.drop{border:2px dashed #d1d5db;border-radius:18px;padding:46px 18px;text-align:center;cursor:pointer;background:#f9fafb;transition:.2s}
+.drop.dragover{border-color:#2563eb;background:#eff6ff}
+.icon{width:48px;height:48px;background:#111827;color:#fff;border-radius:12px;display:grid;place-items:center;margin:0 auto 12px;font-size:20px}
+.barWrap{height:6px;background:#f3f4f6;border-radius:999px;margin-top:18px;overflow:hidden;display:none}
+.bar{height:100%;width:0%;background:#111827;border-radius:999px;transition:.2s}
+.fileRow{margin-top:14px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;padding:12px 14px;display:none;justify-content:space-between;align-items:center}
+.fileRow b{font-size:14px}
+.fileRow span{font-size:12px;color:#6b7280}
+.preview{margin-top:14px;display:none}
+.preview img{max-width:100%;border-radius:14px;border:1px solid #e5e7eb;max-height:300px}
+.linkBox{margin-top:14px;background:#111827;border-radius:14px;padding:14px;display:none}
+.linkBox label{font-size:11px;color:#9ca3af;letter-spacing:.8px}
+.row{display:flex;gap:10px;margin-top:8px}
+.row input{flex:1;background:#1f2937;border:1px solid #374151;border-radius:10px;padding:12px;color:#93c5fd;font-size:14px}
+.btn{padding:12px 16px;border-radius:10px;border:none;background:#fff;color:#111827;font-weight:700;cursor:pointer}
+.status{font-size:12px;color:#9ca3af;margin-top:8px}
+.features{max-width:1100px;margin:70px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;padding:0 20px}
+.feat{border:1px solid #f3f4f6;border-radius:20px;padding:20px;background:#fff}
+.feat p{font-size:13px;color:#6b7280;margin-top:6px;line-height:1.6}
+footer{text-align:center;padding:40px;color:#9ca3af;font-size:12px;border-top:1px solid #f3f4f6;margin-top:60px}
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
-<nav><div class="logo">AirShare.</div><div class="nav-pill"><button class="pill-btn">API</button><button class="pill-btn black">Dashboard →</button></div></nav>
-<div class="hero"><h1>Share files<br><span>faster.</span></h1><p>Clean white minimal sharing. Drop file, get link. Built on Neon + Pxxl.</p></div>
-<div class="card-wrap"><div class="card">
-<label class="drop" id="drop"><input type="file" id="fileIn" hidden><div class="drop-icon">↑</div><div style="font-weight:600">Drop files to upload</div><div style="font-size:13px;color:#6b7280;margin-top:4px">2GB max • PDF, PNG, ZIP</div><div class="bar-wrap" id="barWrap"><div class="bar" id="bar"></div></div></label>
-<div class="file" id="fileRow"><div><b id="fName"></b><br><span id="fSize" style="font-size:12px;color:#6b7280"></span></div><span id="fStatus" style="background:#111827;color:#fff;padding:6px 10px;border-radius:100px;font-size:11px">Uploading</span></div>
-<div class="link-box" id="linkBox"><label style="color:#9ca3af;font-size:11px">YOUR LINK READY</label><div class="link-row"><input id="linkInput" readonly><button class="copy" id="copyBtn">Copy</button></div><div id="status" style="font-size:12px;color:#6b7280;margin-top:8px"></div></div>
-</div></div>
+<div class="grid"></div>
+<nav><div class="logo">AirShare.</div><div class="pills"><div class="pill">2GB Free</div><div class="pill black">Dashboard →</div></div></nav>
+
+<div class="hero">
+<h1>Share files<br><span>faster.</span></h1>
+<p>White, clean, fast. Drop an image and get a share link. Saves to Neon database.</p>
+</div>
+
+<div class="wrap">
+<div class="card">
+<label class="drop" id="drop">
+<input type="file" id="fileIn" hidden accept="image/*,.pdf,.zip,.mp4">
+<div class="icon">↑</div>
+<div style="font-weight:700">Drop image here or click</div>
+<div style="font-size:13px;color:#6b7280;margin-top:4px">PNG, JPG, PDF, ZIP up to 2GB</div>
+<div class="barWrap" id="barWrap"><div class="bar" id="bar"></div></div>
+</label>
+
+<div class="fileRow" id="fileRow">
+<div><b id="fName"></b><br><span id="fSize"></span></div>
+<span id="fStatus" style="background:#111827;color:#fff;padding:6px 10px;border-radius:999px;font-size:11px">Ready</span>
+</div>
+
+<div class="preview" id="preview"><img id="previewImg"></div>
+
+<div class="linkBox" id="linkBox">
+<label>YOUR LINK IS READY</label>
+<div class="row"><input id="linkInput" readonly><button class="btn" id="copyBtn">Copy</button></div>
+<div class="status" id="status"></div>
+</div>
+
+</div>
+</div>
+
+<div class="features">
+<div class="feat"><b>⚡ Real upload</b><p>Sends file as base64 to Netlify function and saves to files table.</p></div>
+<div class="feat"><b>🖼️ Image preview</b><p>Shows preview before upload. Works with PNG/JPG.</p></div>
+<div class="feat"><b>🔗 Share link</b><p>Creates slug in share_links, tapping link increases download count.</p></div>
+<div class="feat"><b>🗄️ Neon DB</b><p>Uses your tables: files + share_links.</p></div>
+</div>
+
+<footer>© 2026 AirShare • White Edition</footer>
+
 <script>
-const DATABASE_CONFIG = { URL: "", files_table: "files", links_table: "share_links" };
-const drop=document.getElementById('drop'),fileIn=document.getElementById('fileIn'),barWrap=document.getElementById('barWrap'),bar=document.getElementById('bar'),fileRow=document.getElementById('fileRow'),linkBox=document.getElementById('linkBox'),linkInput=document.getElementById('linkInput'),statusEl=document.getElementById('status');
-drop.onclick=()=>fileIn.click(); drop.ondragover=e=>{e.preventDefault();drop.style.borderColor='#2563eb'}; drop.ondrop=e=>{e.preventDefault();fileIn.files=e.dataTransfer.files;upload()}; fileIn.onchange=upload;
-async function upload(){
- const f=fileIn.files[0]; if(!f)return;
- document.getElementById('fName').innerText=f.name; document.getElementById('fSize').innerText=(f.size/1024/1024).toFixed(2)+' MB';
- fileRow.style.display='flex'; barWrap.style.display='block'; bar.style.width='20%'; statusEl.textContent='Uploading to Neon...';
- const fd=new FormData(); fd.append('file',f);
- fd.append('fileName',f.name); fd.append('fileSize',f.size);
- try{
-  const res=await fetch('/.netlify/functions/upload',{method:'POST',headers:{'x-file-name':f.name,'x-file-size':f.size},body:fd});
-  const data=await res.json(); bar.style.width='100%'; linkInput.value=location.origin+'/s/'+data.slug; linkBox.style.display='block'; statusEl.textContent='Saved to files & share_links ✓'; document.getElementById('fStatus').innerText='Done ✓';
- }catch(e){statusEl.textContent='Error: '+e.message}
+const drop=document.getElementById('drop'), fileIn=document.getElementById('fileIn'), barWrap=document.getElementById('barWrap'), bar=document.getElementById('bar'), fileRow=document.getElementById('fileRow'), preview=document.getElementById('preview'), previewImg=document.getElementById('previewImg'), linkBox=document.getElementById('linkBox'), linkInput=document.getElementById('linkInput'), statusEl=document.getElementById('status');
+
+drop.onclick=()=>fileIn.click();
+drop.ondragover=e=>{e.preventDefault(); drop.classList.add('dragover');};
+drop.ondragleave=()=>drop.classList.remove('dragover');
+drop.ondrop=e=>{e.preventDefault(); drop.classList.remove('dragover'); fileIn.files=e.dataTransfer.files; realUpload();};
+fileIn.onchange=realUpload;
+
+async function realUpload(){
+ const file=fileIn.files[0]; if(!file) return;
+
+ // Show file info
+ document.getElementById('fName').innerText=file.name;
+ document.getElementById('fSize').innerText=(file.size/1024/1024).toFixed(2)+' MB';
+ fileRow.style.display='flex';
+ document.getElementById('fStatus').innerText='Uploading...';
+ barWrap.style.display='block'; bar.style.width='10%';
+
+ // Preview if image
+ if(file.type.startsWith('image/')){
+   previewImg.src=URL.createObjectURL(file);
+   preview.style.display='block';
+ }
+
+ const reader=new FileReader();
+ reader.onload=async()=>{
+   bar.style.width='40%';
+   const base64=reader.result.split(',')[1];
+   try{
+     bar.style.width='70%';
+     const res=await fetch('/.netlify/functions/upload',{
+       method:'POST',
+       headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({
+         fileName:file.name,
+         fileSize:file.size,
+         fileType:file.type,
+         fileData:base64
+       })
+     });
+     const data=await res.json();
+     if(!res.ok) throw new Error(data.error||'Upload failed');
+     bar.style.width='100%';
+     document.getElementById('fStatus').innerText='Done ✓';
+     linkInput.value=location.origin+'/s/'+data.slug;
+     linkBox.style.display='block';
+     statusEl.innerText='Saved to files & share_links ✓ • '+file.name;
+   }catch(err){
+     statusEl.innerText='Error: '+err.message;
+     document.getElementById('fStatus').innerText='Failed';
+     alert(err.message);
+   }
+ };
+ reader.readAsDataURL(file);
 }
-document.getElementById('copyBtn').onclick=()=>{linkInput.select();document.execCommand('copy');document.getElementById('copyBtn').innerText='Copied!'};
+
+document.getElementById('copyBtn').onclick=()=>{
+ linkInput.select(); document.execCommand('copy');
+ document.getElementById('copyBtn').innerText='Copied!';
+ setTimeout(()=>document.getElementById('copyBtn').innerText='Copy',1200);
+};
 </script>
 </body>
 </html>
