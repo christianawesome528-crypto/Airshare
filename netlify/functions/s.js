@@ -2,11 +2,21 @@ const { Pool } = require('pg');
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
 
 exports.handler = async (event) => {
-  const slug = event.queryStringParameters.slug;
+  const slug = event.queryStringParameters?.slug || event.path.split('/s/').pop();
   try {
-    const r = await pool.query(`SELECT f.original_name FROM share_links s JOIN files f ON f.id=s.file_id WHERE s.slug=$1`, [slug]);
-    if (!r.rows.length) return { statusCode: 404, body: 'Link not found' };
-    await pool.query(`UPDATE share_links SET downloads_count = downloads_count + 1 WHERE slug=$1`, [slug]);
-    return { statusCode: 200, headers: { 'Content-Type': 'text/html' }, body: `<html><body style="font-family:sans-serif;text-align:center;padding:80px"><h2>File: ${r.rows[0].original_name}</h2><p>Download counted ✓</p><a href="/">Back</a></body></html>` };
-  } catch (e) { return { statusCode: 500, body: e.message } }
+    const res = await pool.query('SELECT * FROM airshare_link WHERE slug=$1', [slug]);
+    if(!res.rows[0]) return { statusCode: 404, body: 'Link not found' };
+    const fileId = res.rows[0].file_id;
+    const fileRes = await pool.query('SELECT * FROM airshare WHERE id=$1', [fileId]);
+    if(!fileRes.rows[0]) return { statusCode: 404, body: 'File not found' };
+    const file = fileRes.rows[0];
+    await pool.query('UPDATE airshare_link SET downloads_count = downloads_count + 1 WHERE slug=$1', [slug]);
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': file.mime_type || 'application/octet-stream', 'Content-Disposition': `attachment; filename="${file.original_name}"` },
+      body: `File: ${file.original_name} - Stored as ${file.stored_name} size ${file.size}`,
+    };
+  } catch(e){
+    return { statusCode: 500, body: e.message };
+  }
 };
