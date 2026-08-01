@@ -15,14 +15,15 @@ exports.handler = async (event) => {
     const fileId = require('crypto').randomUUID();
     const slug = nanoid(8);
 
+    // FIXED: Use your actual table names airshare and airshare_link
     await pool.query(
-      `INSERT INTO files (id, original_name, stored_name, size, mime_type, created_at)
+      `INSERT INTO airshare (id, original_name, stored_name, size, mime_type, created_at)
        VALUES ($1,$2,$3,$4,$5,NOW())`,
       [fileId, fileName, fileName, fileSize, fileType]
     );
 
     await pool.query(
-      `INSERT INTO share_links (id, slug, file_id, downloads_count, created_at)
+      `INSERT INTO airshare_link (id, slug, file_id, downloads_count, created_at)
        VALUES (gen_random_uuid(), $1, $2, 0, NOW())`,
       [slug, fileId]
     );
